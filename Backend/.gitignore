@@ -1,0 +1,4 @@
+.env
+node_modules/
+../Frontend/src/fire_config/config.js
+/src/notification/serviceAccountKey.json
