@@ -1,7 +1,7 @@
 import {io} from 'socket.io-client'
 
 export const socket=io(
-    "http://localhost:3000",{
+    "https://nexbids.onrender.com",{
         withCredentials:true,
         transports: ["polling"]
     }
