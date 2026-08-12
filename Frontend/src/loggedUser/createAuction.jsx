@@ -86,7 +86,10 @@ setsuccess(true)
 console.log(response)
 if(response){
   const res=await api.get(`/create_auction/${response.data.data[0]._id}`,
-    title=response.data.data[0].title
+    {
+title:response.data.data[0].title
+    }
+    
   )
   console.log(res)
 }
