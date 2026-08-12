@@ -6,7 +6,7 @@ import { api } from "../utils/api.js";
 
 const delete_notification=async(id)=>{
   try {
-     const res=await api.delete(`delete_notification/${id.toString()}`)
+     const res=await api.delete(`delete_notification/${id.id.toString()}`)
   } catch (error) {
     console.log(error.message)
   }
