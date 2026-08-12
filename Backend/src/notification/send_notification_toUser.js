@@ -17,7 +17,7 @@ const User_notification=async({tokens,bidTitle,amount,bidId,user})=>{
  return messaging.send({
   notification:{
     title:"OUTBID",
-    body:`${user.username} Outbid you in ${bidTitle} by bid amount of ${amount}`,
+    body:`${user.username} Outbid you in ${bidTitle} by bid amount of 💸 Rs ${amount}`,
     
     
   },

@@ -65,7 +65,12 @@ const userSchema = new Schema({
     Mob_no:{
         type:Number,
         default:0
-    }
+    },
+    Trusted:{
+        type:Boolean,
+        default:false
+    },
+    
 
 },{timestamps:true})
 

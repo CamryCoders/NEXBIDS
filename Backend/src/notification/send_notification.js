@@ -19,7 +19,7 @@ const seller_notification=async({tokens,bidId,amount,sellerId,user})=>{
  return messaging.send({
   notification:{
     title:"New Bid",
-    body:`${user.username} Placed bid of amount  Rs${amount}`,
+    body:`${user.username} Placed bid of amount 💸 Rs${amount}`,
     
   },
   token:token

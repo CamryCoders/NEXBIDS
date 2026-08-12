@@ -43,5 +43,26 @@ const Unread_notification=asyncHandler(async(req,res)=>{
     )
 })
 
+const delete_notification=asyncHandler(async(req,res)=>{
+const user=req.user
+const {id}=req.params
+if(!user){
+    throw new ApiError(402,"User not found")
+}
+const delete_=await Notification.findByIdAndDelete(id)
 
-export {all_notification,Unread_notification}
+if(!delete_){
+    throw new ApiError(404,"No such notification found")
+}
+
+res.status(200).json(
+    new ApiResponse(200,"Bid Delete Successfully")
+)
+})
+
+
+
+
+
+
+export {all_notification,Unread_notification,delete_notification}

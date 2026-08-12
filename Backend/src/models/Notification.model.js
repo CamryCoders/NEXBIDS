@@ -26,6 +26,7 @@ const notification_schema=new Schema({
     "AUCTION_WON",
     "AUCTION_LOST",
     "AUCTION_ENDING",
+    "NEW_AUCTION"
   ],
   required: true,
 },

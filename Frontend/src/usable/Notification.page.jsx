@@ -5,6 +5,8 @@ import { api } from "../utils/api.js";
 
 function Newnotification(){
 const [all_notification,setall_notification]=useState([])
+  const [activeid,setactiveid]=useState("")
+
 
 useEffect(()=>{
     const fxn=async()=>{
@@ -21,11 +23,20 @@ setall_notification(res)
 <div className="h-full w-full flex justify-center">
 <div className="p-4">
     {all_notification.length>=0?all_notification.map((notification)=>{
-return <NotificationCard key={notification._id}
+return <NotificationCard
+className={`transition-[opacity,transform] duration-300 ${
+      activeid === notification._id
+        ? "opacity-50 scale-95"
+        : "opacity-100 scale-100"
+    }`}
+
+onClick={setactiveid(notification._id)}
+key={notification._id}
           type={notification.type}
           content={notification.Content}
           time={notification.createdAt}
           isRead={notification.isRead}
+          id={notification._id}
 
 />
     }):<div className="font-bold"> No notification Yet...</div>}

@@ -1,8 +1,21 @@
 import { useState,useEffect } from "react";
+import {Trash2} from 'lucide-react'
+import { api } from "../utils/api.js";
 
- function NotificationCard({type,content,time,isRead}) {
+ function NotificationCard({type,content,time,isRead,id,className}) {
+
+const delete_notification=async(id)=>{
+  try {
+     const res=await api.delete(`delete_notification/${id}`)
+  } catch (error) {
+    console.log(error.message)
+  }
+ 
+
+}
+
   return (
-    <div className="max-w-md w-full bg-slate-300 m-5 backdrop-blur-md border border-slate-200/80 rounded-2xl p-4 shadow-xl shadow-slate-200/60 relative flex items-start gap-3.5 hover:border-indigo-200 transition-all duration-300">
+    <div className={`max-w-md w-full bg-slate-300 m-5 backdrop-blur-md border border-slate-200/80 rounded-2xl p-4 shadow-xl shadow-slate-200/60 relative flex items-start gap-3.5 hover:border-indigo-200 transition-all duration-300 ${className}`}>
       
     
       <div className="relative flex-shrink-0">
@@ -14,10 +27,16 @@ import { useState,useEffect } from "react";
       </div>
 
       
-      <div className="flex-1 min-w-0 pr-12 pb-2">
-        <h4 className="text-sm font-bold text-slate-900 truncate tracking-tight">
+      <div className="flex-1 min-w-0 pr-12 pb-2 relative">
+        <span>
+ <h4 className="text-sm font-bold text-slate-900 truncate tracking-tight">
           {type}
         </h4>
+        </span>
+        <span className="absolute top-5 right-5">
+<Trash2 size={20} color="Black"/>
+        </span>
+       
         <p className="text-xs text-black mt-1 leading-relaxed line-clamp-2 ">
           {content} <span className="font-semibold text-slate-800">$14,250</span> on your listing.
         </p>
