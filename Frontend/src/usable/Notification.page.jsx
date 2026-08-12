@@ -30,7 +30,7 @@ className={`transition-[opacity,transform] duration-300 ${
         : "opacity-100 scale-100"
     }`}
 
-onClick={setactiveid(notification._id)}
+onClick={()=>setactiveid(notification._id)}
 key={notification._id}
           type={notification.type}
           content={notification.Content}
