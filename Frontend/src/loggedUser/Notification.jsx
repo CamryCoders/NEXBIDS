@@ -35,7 +35,7 @@ const delete_notification=async(id)=>{
         </span>
         <span
         onClick={delete_notification}
-        className="absolute top-3 right-5 hover:bg-white w-23 h-23 rounded-full ">
+        className="absolute top-5 right-5 hover:bg-white w-13 h-13 rounded-full ">
 <Trash2 size={20} color="Black"/>
         </span>
        
