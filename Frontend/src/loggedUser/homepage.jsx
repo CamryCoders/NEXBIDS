@@ -1,6 +1,7 @@
 import React,{ useEffect } from "react"
 import { GenerateToken } from "../fire_config/Permission.jsx"
 import{api} from '../utils/api.js'
+import { useNavigate } from "react-router";
 import {
   Shirt,
   Footprints,
@@ -25,6 +26,11 @@ import { Pr_page } from "../usable/premium_bid.jsx";
 
 
 function Homepage(){
+const Navigate=useNavigate()
+const redirectpage=(category)=>{
+    Navigate(`/create_auction/${category}`)
+}
+
     useEffect(()=>{
         try {
             const fxn=async()=>{
@@ -147,7 +153,11 @@ const [pr_bid,setpr_bid]=useState("")
                     icon.map((Item)=>{
                         const Icons=Item.name
                         return <div key={Item} className="flex-none bg-slate-900 border border-slate-800 hover:border-violet-500/50 p-4 rounded-2xl flex items-center gap-3 cursor-pointer transition-all duration-300 w-48 group">
-                    <div className="w-10 h-10 rounded-xl bg-emerald-600/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400 shrink-0 group-hover:bg-emerald-600 group-hover:text-white transition-colors duration-300">
+                    <div
+                    onClick={(()=>{
+redirectpage(Item.purpose)
+                    })}
+                    className="w-10 h-10 rounded-xl bg-emerald-600/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400 shrink-0 group-hover:bg-emerald-600 group-hover:text-white transition-colors duration-300">
                         <Icons size={20} color= {Item.color}/>
                     </div>
                     <div>

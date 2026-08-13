@@ -4,6 +4,7 @@ import { asyncHandler } from "../utils/asynchandler.js";
 import { ApiResponse } from "../utils/Apiresponse.js";
 import { mongoose } from "mongoose";
 import { BidHistory } from "../models/Bidhistory.model.js";
+import { User } from "../models/user.model.js";
 
 import {v2 as cloudinary} from 'cloudinary'
 import { upload } from "../middleware/upload.middleware.js";
@@ -294,6 +295,34 @@ const top5bid=asyncHandler(async(req,res)=>{
 
 })
 
+const specific_Bid=asyncHandler(async(req,res)=>{
+    const {Category}=req.params
+    const user=req.user
+    if(!user){
+        throw new ApiError(402,"User not found")
+    }
+
+    const All_specific_Bid=await AllBid.aggregate([
+        {
+            $match:{
+                $createdBy:{
+                    $ne:new mongoose.Types.ObjectId(user._id)
+
+                },
+                Category:Category
+            } 
+
+                
+
+        },{
+            $count:"count"
+
+        }])
+
+        res.status(200).json(
+            new ApiResponse(200,"Specific Auction Fetched Successfully")
+        )
+})
 
 
 
@@ -305,5 +334,6 @@ export{
     personBid,
     upcomingBid,
     PremiumBid,
-    top5bid
+    top5bid,
+    specific_Bid
 }

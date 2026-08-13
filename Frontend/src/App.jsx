@@ -22,6 +22,7 @@ import { Profile } from './loggedUser/profile.jsx'
 import { ProtectedRoute } from './loggedUser/Protected_route.jsx'
 import { Analysis } from './loggedUser/analytics.jsx'
 import { Newnotification } from './usable/Notification.page.jsx'
+import { SpecificBid } from './loggedUser/specific_bids.jsx'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -35,8 +36,8 @@ const router = createBrowserRouter(
 
         <Route path="/user/bid/createAuction" element={<ProtectedRoute> <CreateAuction /></ProtectedRoute>} />
         <Route path="/user/specbid" element={<ProtectedRoute> <Newnotification/> </ProtectedRoute>}/>
-                <Route path="/user/bid/analysis/:bidId" element={<ProtectedRoute><Analysis/> </ProtectedRoute>}/>
-
+        <Route path="/user/bid/analysis/:bidId" element={<ProtectedRoute><Analysis/> </ProtectedRoute>}/>
+        <Route path="/user/bid/category_auction/:Category" element={<ProtectedRoute> <SpecificBid/> </ProtectedRoute>}/>
         <Route path="/user/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>}/>
 
       </Route>

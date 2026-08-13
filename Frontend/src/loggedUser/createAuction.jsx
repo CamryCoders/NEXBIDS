@@ -388,10 +388,10 @@ setimages([...e.target.files])
 
             {
               error||success?<><button onclick={(()=>{
-             
+              Navigate("/user/bid")
               setopen(false)
               setsuccess(false)
-               Navigate("/user/bid")
+              
             })}
              class="w-full group py-3 bg-slate-900 hover:bg-slate-800 text-white rounded-xl text-xs font-bold transition-colors">
             {error?error:" "}  View Active Container Log

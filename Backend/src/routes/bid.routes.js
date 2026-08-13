@@ -1,4 +1,4 @@
-import { createBid,getAllBid, livebid, personBid, PremiumBid, top5bid, upcomingBid } from "../controller/Bid.controller.js";
+import { createBid,getAllBid, livebid, personBid, PremiumBid, specific_Bid, top5bid, upcomingBid } from "../controller/Bid.controller.js";
 import { Router } from "express";
 import { verifyjwt } from "../middleware/auth.middleware.js";
 import { upload } from "../middleware/upload.middleware.js";
@@ -33,6 +33,7 @@ bidrouter.route("/analysis/:bidId").get(verifyjwt,AnalysisPage)
 
 bidrouter.route("/all_notification").get(verifyjwt,all_notification)
 bidrouter.route("/Unread_notification").get(verifyjwt,Unread_notification)
+bidrouter.route("/category_auction/:Category").get(verifyjwt,specific_Bid)
 
 
 export {bidrouter}

@@ -32,6 +32,43 @@ function Eachbidpage() {
   const [notified,setnotified]=useState(false)
 
 
+  function timeAgo(createdAt) {
+  const now = new Date();
+  const created = new Date(createdAt);
+
+  const diff = now - created; // milliseconds
+
+  const seconds = Math.floor(diff / 1000);
+  const minutes = Math.floor(seconds / 60);
+  const hours = Math.floor(minutes / 60);
+  const days = Math.floor(hours / 24);
+
+  if (seconds < 60) {
+    return "just now";
+  }
+
+  if (minutes < 60) {
+    return `${minutes} minute${minutes !== 1 ? "s" : ""} ago`;
+  }
+
+  if (hours < 24) {
+    return `${hours} hour${hours !== 1 ? "s" : ""} ago`;
+  }
+
+  if (days < 30) {
+    return `${days} day${days !== 1 ? "s" : ""} ago`;
+  }
+
+  const months = Math.floor(days / 30);
+
+  if (months < 12) {
+    return `${months} month${months !== 1 ? "s" : ""} ago`;
+  }
+
+  const years = Math.floor(days / 365);
+  return `${years} year${years !== 1 ? "s" : ""} ago`;
+}
+
   useEffect(() => {
     apibid().then(async(response) => {
       console.log("fetched")
@@ -296,12 +333,12 @@ return ()=>{
                 {bidDetail[0].Description}
               </p>
 
-<details className='w-full bg-indigo-200 border-2 border-indigo-400 '>
+<details className='w-full bg-indigo-100 border-1 border-indigo-200 rounded-lg'>
 <summary className='p-2 Font-Bold '>More Details</summary>
-<span className='ml-3'>Width:</span>   <span className='p-2 bg-indigo-200 m-2'>{bidDetail[0].width}</span>
-<span className='ml-3'>Height:</span><span className='p-2 bg-indigo-200 m-2'>{bidDetail[0].height}</span>
-<span className='ml-3'>Weight:</span><span className='p-2 bg-indigo-200 m-2'>{bidDetail[0].weight}</span>
-<span className='ml-3'>Color:</span><span className='p-2 bg-indigo-200 m-2'>{bidDetail[0].color}</span>
+<span className='ml-3 font-Bold '>Width:</span><span className='p-2 bg-white text-black font-bold text-md m-2  rounded-md'>{bidDetail[0].width} cm</span>
+<span className='ml-3 font-Bold'>Height:</span><span className='p-2 bg-white text-black font-bold text-md m-2 rounded-md'>{bidDetail[0].height}cm</span>
+<span className='ml-3 font-Bold'>Weight:</span><span className='p-2 bg-white text-black font-bold text-md m-2 rounded-md'>{bidDetail[0].weight}</span>
+<span className='ml-3  font-Bold'>Color:</span><span className='p-2 bg-white text-black font-bold text-md m-2 rounded-md'>{bidDetail[0].color}</span>
 
 
 
@@ -336,7 +373,7 @@ return ()=>{
             <div class="space-y-2.5">
               <h4 class="text-xs font-black uppercase tracking-wider text-slate-400 flex items-center gap-1.5">
                 <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="text-indigo-500"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" /></svg>
-                Top 5 Recent Higher Bids
+                Top Recent Higher Bids
               </h4>
               <div class="space-y-1.5">
 
@@ -350,7 +387,7 @@ return <div key={i} class="flex  items-center justify-between p-2.5 rounded-xl b
                   </div>
                   <div class="text-right">
                     <span class={`font-black  ${i==0?"text-indigo-600":"text-slate-700"} mr-3`}>Rs{bidder.amount}</span>
-                    <span class="text-slate-400 font-semibold text-[10px]">Just now</span>
+                    <span class="text-slate-400 font-semibold text-[10px]"> {timeAgo(bidder.createdAt)} </span>
                   </div>
                 </div>
 }):<></>
@@ -359,49 +396,6 @@ return <div key={i} class="flex  items-center justify-between p-2.5 rounded-xl b
 
                 
 
-                {/* <div class="flex items-center justify-between p-2.5 rounded-xl bg-white border border-slate-100 text-xs">
-                  <div class="flex items-center gap-2">
-                    <span class="w-5 h-5 rounded-md bg-slate-100 text-[10px] font-black text-slate-500 flex items-center justify-center">2</span>
-                    <span class="font-bold text-slate-700">@CryptoWhale</span>
-                  </div>
-                  <div class="text-right">
-                    <span class="font-black text-slate-700 mr-3">$4,700</span>
-                    <span class="text-slate-400 font-medium text-[10px]">2 minutes ago</span>
-                  </div>
-                </div>
-
-                <div class="flex items-center justify-between p-2.5 rounded-xl bg-white border border-slate-100 text-xs">
-                  <div class="flex items-center gap-2">
-                    <span class="w-5 h-5 rounded-md bg-slate-100 text-[10px] font-black text-slate-500 flex items-center justify-center">3</span>
-                    <span class="font-bold text-slate-700">@Priya_S</span>
-                  </div>
-                  <div class="text-right">
-                    <span class="font-black text-slate-700 mr-3">$4,550</span>
-                    <span class="text-slate-400 font-medium text-[10px]">5 minutes ago</span>
-                  </div>
-                </div>
-
-                <div class="flex items-center justify-between p-2.5 rounded-xl bg-white border border-slate-100 text-xs">
-                  <div class="flex items-center gap-2">
-                    <span class="w-5 h-5 rounded-md bg-slate-100 text-[10px] font-black text-slate-500 flex items-center justify-center">4</span>
-                    <span class="font-bold text-slate-700">@GavelMaster</span>
-                  </div>
-                  <div class="text-right">
-                    <span class="font-black text-slate-700 mr-3">$4,400</span>
-                    <span class="text-slate-400 font-medium text-[10px]">12 minutes ago</span>
-                  </div>
-                </div>
-
-                <div class="flex items-center justify-between p-2.5 rounded-xl bg-white border border-slate-100 text-xs">
-                  <div class="flex items-center gap-2">
-                    <span class="w-5 h-5 rounded-md bg-slate-100 text-[10px] font-black text-slate-500 flex items-center justify-center">5</span>
-                    <span class="font-bold text-slate-700">@Elena_R</span>
-                  </div>
-                  <div class="text-right">
-                    <span class="font-black text-slate-700 mr-3">$4,250</span>
-                    <span class="text-slate-400 font-medium text-[10px]">45 minutes ago</span>
-                  </div>
-                </div> */}
               </div>
             </div>
 
