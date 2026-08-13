@@ -48,7 +48,7 @@ const createBid=async(req,res)=>{
 
     
     const [hours,min]=duration.split(":").map(Number)
-    console.log(hours,min)
+    console.log(hours,min,Category)
   console.log("reached here")
     const newBid=await AllBid.create({
         title,
@@ -71,6 +71,7 @@ const createBid=async(req,res)=>{
         })
 
     })
+    console.log(newBid)
     if(!newBid){
         throw new ApiError(500,"Bid has not created successfully")
     }
