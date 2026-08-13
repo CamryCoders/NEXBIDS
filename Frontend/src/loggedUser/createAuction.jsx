@@ -159,9 +159,9 @@ thumbnail={bid.productImages[0].url}
            Create Auction
          </button>
        </>
-<>
+
   
-</>
+
 
     )
   } else {
