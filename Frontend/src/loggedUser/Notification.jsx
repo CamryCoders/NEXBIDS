@@ -4,12 +4,16 @@ import { api } from "../utils/api.js";
 
  function NotificationCard({type,content,time,isRead,id}) {
   const [opac,setopac]=useState(false)
+  const [hid,sethid]=useState(false)
 
 const delete_notification=async()=>{
   try {
      const res=await api.delete(`/delete_notification/${id.toString()}`)
      if(res){
       setopac(true)
+      setTimeout(() => {
+        sethid(true)
+      }, 300);
      }
   } catch (error) {
     console.log(error.message)
@@ -19,7 +23,7 @@ const delete_notification=async()=>{
 }
 
   return (
-    <div className={`max-w-md w-full bg-slate-300 m-5 backdrop-blur-md border border-slate-200/80 rounded-2xl p-4 shadow-xl shadow-slate-200/60 relative flex items-start gap-3.5 hover:border-indigo-200 transition-all duration-300 ${opac?"opacity-0 scale-50":""}`}>
+    <div className={`max-w-md w-full bg-slate-300 m-5 backdrop-blur-md border border-slate-200/80 rounded-2xl p-4 shadow-xl shadow-slate-200/60 relative flex items-start gap-3.5 hover:border-indigo-200 transition-all duration-300 ${opac?"opacity-0 scale-50":""} ${hid?"hidden":""}`}>
       
     
       <div className="relative flex-shrink-0">
