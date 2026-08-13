@@ -257,8 +257,8 @@ title:response.data.data[0].title
           <label for="item-category" class="block text-xs font-bold text-slate-500 uppercase tracking-wider">Category</label>
           <select
             disabled={clicked}
-            value={category}
-            onChange={(e) => setcategory(e.target.value)}
+            value={Category}
+            onChange={(e) => setCategory(e.target.value)}
             id="item-category"
             required
             class="w-full px-4 py-3 bg-slate-50/60 border border-slate-200 rounded-xl text-sm font-semibold text-slate-800 focus:outline-none focus:border-indigo-500 focus:bg-white transition-all appearance-none cursor-pointer">
