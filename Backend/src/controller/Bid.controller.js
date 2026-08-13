@@ -16,12 +16,12 @@ const createBid=async(req,res)=>{
         throw new ApiError(400,"UnAuntheticated request")
     }
     console.log(user,req.files.productimages)
-    const {title,startingPrice,width,height,weight,Description,color,model,duration,Later}=req.body
+    const {title,startingPrice,width,height,weight,Description,color,model,duration,Later,Category}=req.body
    
 
 
     if(
-        [title,startingPrice,width,height,weight,Description,duration,color,Later].some((value)=>value.trim()==="")
+        [title,startingPrice,width,height,weight,Description,duration,color,Later,Category].some((value)=>value.trim()==="")
     ){
         throw new ApiError(400,"All Fields are Compulsory")
     }
@@ -58,6 +58,7 @@ const createBid=async(req,res)=>{
         weight,
         Description,
         color,
+        Category,
         createdBy:user._id,
         highestBid:startingPrice,
         Duration:Date.now()+ 1000*(hours*3600+min*60)+(1000*(Later*3600)),
@@ -129,7 +130,11 @@ const bidDetail=async(req,res)=>{
     if(!bidId){
         throw new ApiError(404,"No Such Auction found")
     }
-   
+   const bid=await AllBid.findOne({_id:bidId})
+
+   if(bid.Duration<Date.now()){
+    throw new ApiError(404,"Auction has Ended")
+   }
     const Bid=await AllBid.aggregate([{
         $match:{
             _id:new mongoose.Types.ObjectId(bidId)

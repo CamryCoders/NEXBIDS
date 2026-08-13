@@ -34,7 +34,13 @@ return (()=>clearInterval(interval))
       },[])
 
   function getBidPage(){
-  Navigate(`/user/bid/${BidId}`)
+    if(second<1 &&minute==0&&hours==0){
+      Navigate(`/user/bid/analysis/${BidId}`)
+    }
+    else{
+Navigate(`/user/bid/${BidId}`)
+    }
+  
   
   }
 
@@ -76,7 +82,7 @@ return (
             <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="text-rose-500"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
             Time Left
           </p>
-          <p class="text-base font-black text-slate-700 tracking-tight">{auction?`${hours}"Hr:"${minute}"m :" ${second}"s"`:"Auction Ended"}</p>
+          <p class="text-base font-black text-slate-700 tracking-tight">{auction?`${hours}Hr :${minute}m :${second}s`:"Auction Ended"}</p>
         </div>
 
         <div class="space-y-0.5 text-center sm:text-left border-l border-slate-200/60 pl-2">

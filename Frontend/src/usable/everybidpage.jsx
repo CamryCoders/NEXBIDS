@@ -295,6 +295,18 @@ return ()=>{
               <p class="text-sm font-medium text-slate-500 leading-relaxed">
                 {bidDetail[0].Description}
               </p>
+
+<details className='w-full bg-indigo-200 border-2 border-indigo-400 '>
+<summary className='p-2 Font-Bold '>More Details</summary>
+<span className='ml-3'>Width:</span>   <span className='p-2 bg-indigo-200 m-2'>{bidDetail[0].width}</span>
+<span className='ml-3'>Height:</span><span className='p-2 bg-indigo-200 m-2'>{bidDetail[0].height}</span>
+<span className='ml-3'>Weight:</span><span className='p-2 bg-indigo-200 m-2'>{bidDetail[0].weight}</span>
+<span className='ml-3'>Color:</span><span className='p-2 bg-indigo-200 m-2'>{bidDetail[0].color}</span>
+
+
+
+</details>
+
             </div>
 
             <div class="grid grid-cols-3 gap-3 sm:gap-4 bg-slate-50/70 border border-slate-200/60 p-4 rounded-2xl">

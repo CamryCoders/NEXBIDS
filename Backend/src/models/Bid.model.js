@@ -56,7 +56,11 @@ winner:{
 highestBid:{
     type:Number,
     default:0
-}
+},
+Category:{
+    type:String,
+    required:true
+},
 
 
 

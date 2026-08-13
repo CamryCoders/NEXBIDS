@@ -218,7 +218,21 @@ const getCurrentUser=asyncHandler(async(req,res)=>{
     if(!req.user){
         throw new ApiError(402,"User not found")
     }
+    const curr_user=req.user
+      const completed=[curr_user.email,curr_user.alt_email,curr_user.avatar,curr_user.Mob_no,curr_user.username].filter(value=> value!==null &&value!==undefined &&value!=="").length
+if (curr_user.Total_Bid>=10&&completed==5){
+    
+     const user=await User.findByIdAndUpdate(req.user._id,
+        {
+            $set:{
+                Trusted:true
+            }
+        }
+     )
+
+}
  const user=await User.findById(req.user._id)
+
 
 
     return res
