@@ -24,13 +24,9 @@ setall_notification(res)
 <div className="p-4">
     {all_notification.length>=0?all_notification.map((notification)=>{
 return <NotificationCard
-onClick={()=>setactiveid(notification._id)}
 
-className={`transition-[opacity,transform] duration-300 ${
-      activeid === notification._id
-        ? "opacity-50 scale-95"
-        : "opacity-100 scale-100"
-    }`}
+
+
 
 key={notification._id}
           type={notification.type}

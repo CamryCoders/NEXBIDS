@@ -2,7 +2,8 @@ import { useState,useEffect } from "react";
 import {Trash2} from 'lucide-react'
 import { api } from "../utils/api.js";
 
- function NotificationCard({type,content,time,isRead,id,className}) {
+ function NotificationCard({type,content,time,isRead,id}) {
+  const [opac,setopac]=useState(false)
 
 const delete_notification=async()=>{
   try {
@@ -15,7 +16,7 @@ const delete_notification=async()=>{
 }
 
   return (
-    <div className={`max-w-md w-full bg-slate-300 m-5 backdrop-blur-md border border-slate-200/80 rounded-2xl p-4 shadow-xl shadow-slate-200/60 relative flex items-start gap-3.5 hover:border-indigo-200 transition-all duration-300 ${className}`}>
+    <div className={`max-w-md w-full bg-slate-300 m-5 backdrop-blur-md border border-slate-200/80 rounded-2xl p-4 shadow-xl shadow-slate-200/60 relative flex items-start gap-3.5 hover:border-indigo-200 transition-all duration-300 ${opac?"opacity-50 scale-70":""}`}>
       
     
       <div className="relative flex-shrink-0">
@@ -34,7 +35,10 @@ const delete_notification=async()=>{
         </h4>
         </span>
         <span
-        onClick={delete_notification}
+        onClick={(()=>{
+          setopac(true)
+          delete_notification()
+        })}
         className="absolute top-5 right-5 hover:bg-white w-13 h-13 rounded-full ">
 <Trash2 size={20} color="Black"/>
         </span>
