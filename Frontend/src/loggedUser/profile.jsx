@@ -11,7 +11,13 @@ function Profile(){
   const [auction,setauction]=useState("")
   const [user_detail,setuser_detail]=useState("")
   const [percent,setpercent]=useState([])
+  const [auction,setauction]=useState(0)
 const Navigate=useNavigate()
+useEffect(()=>{
+  const completed=[email,alt_email,image_url,Mob_no,Username].filter(value=> value!==null &&value!==undefined &&value!=="").length
+  setpercent(Math.round((completed/6)*100))
+})
+
   useEffect(()=>{
     const user= async()=>{
       const res=await api.get("/user_profile")
@@ -24,15 +30,11 @@ const Navigate=useNavigate()
       setemail(res.email)
       setimage_url(res.avatar)
       setMob_no(res.Mob_no)
-      res.Mob_no?setpercent((prev)=>[...prev,1]):
       
-      res.email?setpercent((prev)=>[...prev,1]):
       
-      res.username?setpercent((prev)=>[...prev,1]):
       setauction(res.Total_Bid)
-      res.alt_email?setalt_email(res.alt_email):
-      res.alt_email?setpercent((prev)=>[...prev,1]):""
-
+     
+     
     })
     
   },[])
@@ -71,7 +73,9 @@ const Navigate=useNavigate()
   const logout=async()=>{
     const res=await api.post("/logout_user")
 
-    console.log(res.data)
+   if(res){
+    Navigate("/Login")
+   }
 
   }
   
@@ -121,7 +125,7 @@ upload_avatar(e.target.files[0])
           </div>
 
          
-          <div class="relative w-28 h-28 rounded-full flex items-center justify-center shadow-inner" style={{background: `conic-gradient( #2f26d8 0% ${(percent.length)*10}%, #e5e7eb ${(percent.length)*10}% 100%)`}}>
+          <div class="relative w-28 h-28 rounded-full flex items-center justify-center shadow-inner" style={{background: `conic-gradient( #2f26d8 0% ${percent}%, #e5e7eb ${percent}% 100%)`}}>
             
             <div class="w-22 h-22 w-[84px] h-[84px] bg-white rounded-full flex flex-col items-center justify-center">
               <span class="text-2xl font-black text-indigo-600">{(percent.length)*10}</span>

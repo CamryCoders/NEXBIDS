@@ -73,7 +73,15 @@ const createBid=async(req,res)=>{
     if(!newBid){
         throw new ApiError(500,"Bid has not created successfully")
     }
-  
+  const bidcount=await User.findByIdAndUpdate(user._id,
+    {
+        $inc:{
+            Total_Bid:1
+        }
+    },{
+        new:true
+    }
+  )
 
     return res.status(200).json(
         new ApiResponse(200,newBid,"Bid created Successfully")

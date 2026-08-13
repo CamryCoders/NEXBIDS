@@ -15,7 +15,7 @@ const verifyjwt=asyncHandler(async(req,res,next)=>{
   const decoded=jwt.verify(token,process.env.ACCESS_TOKEN_SECRET)
   const user=await User.findById(decoded?._id).select("-password -refreshToken")
   if(!user){
-    throw new ApiError(400,"No user found")
+    throw new ApiError(402,"No user found")
   }
   req.user=user
 next()

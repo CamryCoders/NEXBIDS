@@ -12,15 +12,26 @@ function ProtectedRoute({ children }) {
             withCredentials: true
         })
         .then(() => setAuthenticated(true))
-        .catch(() => setAuthenticated(false))
+        .catch((error) => {
+            if(error.response.status==402){
+                Navigate("/Login")
+            }
+            else if(error.response?.status==500){
+                return (
+                    <div className="w-full h-full justify-center items-center p-5">
+                        <div className="font-Bold text-rose-300 ">
+                        {error.response?.data?.message} 
+                        </div>
+                    </div>
+                )
+            }
+        })
         .finally(() => setLoading(false));
     }, []);
 
-    if (loading) return <Loader />;
+    
 
-    if (!authenticated) {
-      
-    }
+   
 
     return children;
 }
