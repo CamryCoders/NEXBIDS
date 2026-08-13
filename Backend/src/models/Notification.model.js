@@ -20,13 +20,13 @@ const notification_schema=new Schema({
     type: {
   type: String,
   enum: [
-    "NEW_BID",
+    "🔥 NEW_BID 🔥",
     "OUTBID",
     "NEW_MESSAGE",
     "AUCTION_WON",
     "AUCTION_LOST",
     "AUCTION_ENDING",
-    "NEW_AUCTION"
+    "🎉 NEW_AUCTION 🎆"
   ],
   required: true,
 },
