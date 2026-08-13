@@ -3,8 +3,8 @@ import {Trash2} from 'lucide-react'
 import { api } from "../utils/api.js";
 
  function NotificationCard({type,content,time,isRead,id,className}) {
-console.log(id,isRead)
-const delete_notification=async(id)=>{
+
+const delete_notification=async()=>{
   try {
      const res=await api.delete(`delete_notification/${id.toString()}`)
   } catch (error) {
