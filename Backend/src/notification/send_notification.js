@@ -57,7 +57,7 @@ const save_notification=await Notification.create({
   receiver:sellerId,
   sender:user._id,
   Content:`${user.username} Placed amount of ${amount}`,
-  type:"NEW_BID",
+  type:"🔥 NEW_BID 🔥",
   BidId:bidId,
   isRead:false
 

@@ -23,7 +23,7 @@ if(user.Browser.length>0){
       
  return messaging.send({
   notification:{
-    title:"NEW AUCTION",
+    title:"🎉 NEW_AUCTION 🎆",
     body:`Congratulations 🥳 You have Successfully 🎉 Created your NEW Auction of ${title}`,
     
   },

@@ -19,7 +19,7 @@ const delete_notification=async()=>{
 }
 
   return (
-    <div className={`max-w-md w-full bg-slate-300 m-5 backdrop-blur-md border border-slate-200/80 rounded-2xl p-4 shadow-xl shadow-slate-200/60 relative flex items-start gap-3.5 hover:border-indigo-200 transition-all duration-300 ${opac?"opacity-50 scale-70":""}`}>
+    <div className={`max-w-md w-full bg-slate-300 m-5 backdrop-blur-md border border-slate-200/80 rounded-2xl p-4 shadow-xl shadow-slate-200/60 relative flex items-start gap-3.5 hover:border-indigo-200 transition-all duration-300 ${opac?"opacity-0 scale-50":""}`}>
       
     
       <div className="relative flex-shrink-0">
@@ -43,11 +43,11 @@ const delete_notification=async()=>{
           delete_notification()
         })}
        >
-         <Trash2 size={20} color="Black"  className="absolute top-3 right-5 hover:bg-white w-13 h-13 rounded-full " />
+         <Trash2 size={20} color="Black"  className="absolute top-3 right-5 hover:bg-white w-8 h-8 rounded-full " />
         </span>
        
         <p className="text-xs text-black mt-1 leading-relaxed line-clamp-2 ">
-          {content} <span className="font-semibold text-slate-800">$14,250</span> on your listing.
+          {content} <span className="font-semibold text-slate-800"></span> on your listing.
         </p>
         <span className="text-[10px] font-medium text-indigo-700  mt-2 block">
             <p>
