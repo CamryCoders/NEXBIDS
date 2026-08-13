@@ -409,23 +409,3 @@ setimages([...e.target.files])
 }
 export { CreateAuction }
 
-<div class="space-y-1.5">
-          <label for="item-category" class="block text-xs font-bold text-slate-500 uppercase tracking-wider">Category</label>
-          <select
-            disabled={clicked}
-            value={Category}
-            onChange={(e) => setCategory(e.target.value)}
-            id="item-category"
-            required
-            class="w-full px-4 py-3 bg-slate-50/60 border border-slate-200 rounded-xl text-sm font-semibold text-slate-800 focus:outline-none focus:border-indigo-500 focus:bg-white transition-all appearance-none cursor-pointer">
-            <option value="" disabled selected>Select Category</option>
-            <option value="digital_art">Digital Art</option>
-            <option value="Clothes">Clothes</option>
-            <option value="Utensils">Utensils</option>
-            <option value="Appliances">Appliances</option>
-            <option value="Electronics">Electronics</option>
-            <option value="Furnitures">Furnitures</option>
-            <option value="Books">Books</option>
-            <option value="Footwear">Footwear</option>
-          </select>
-        </div>
