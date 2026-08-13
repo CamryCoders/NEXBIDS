@@ -8,6 +8,9 @@ import { api } from "../utils/api.js";
 const delete_notification=async()=>{
   try {
      const res=await api.delete(`/delete_notification/${id.toString()}`)
+     if(res){
+      setopac(true)
+     }
   } catch (error) {
     console.log(error.message)
   }
@@ -36,11 +39,11 @@ const delete_notification=async()=>{
         </span>
         <span
         onClick={(()=>{
-          setopac(true)
+          
           delete_notification()
         })}
-        className="absolute top-5 right-5 hover:bg-white w-13 h-13 rounded-full ">
-<Trash2 size={20} color="Black"/>
+       >
+         <Trash2 size={20} color="Black"  className="absolute top-3 right-5 hover:bg-white w-13 h-13 rounded-full " />
         </span>
        
         <p className="text-xs text-black mt-1 leading-relaxed line-clamp-2 ">

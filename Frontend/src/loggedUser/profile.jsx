@@ -128,7 +128,7 @@ upload_avatar(e.target.files[0])
           <div class="relative w-28 h-28 rounded-full flex items-center justify-center shadow-inner" style={{background: `conic-gradient( #2f26d8 0% ${percent}%, #e5e7eb ${percent}% 100%)`}}>
             
             <div class="w-22 h-22 w-[84px] h-[84px] bg-white rounded-full flex flex-col items-center justify-center">
-              <span class="text-2xl font-black text-indigo-600">{(percent.length)*10}</span>
+              <span class="text-2xl font-black text-indigo-600">{percent}</span>
               <span class="text-[10px] text-gray-400 font-medium uppercase tracking-wider">Done</span>
             </div>
           </div>
