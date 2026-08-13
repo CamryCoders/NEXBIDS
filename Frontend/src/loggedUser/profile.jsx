@@ -8,10 +8,10 @@ function Profile(){
   const [image_url,setimage_url]=useState("")
   const [Mob_no,setMob_no]=useState("")
   const [Username,setUsername]=useState("")
-  const [auction,setauction]=useState("")
+  const [auction,setauction]=useState(0)
   const [user_detail,setuser_detail]=useState("")
   const [percent,setpercent]=useState([])
-  const [auction,setauction]=useState(0)
+ 
 const Navigate=useNavigate()
 useEffect(()=>{
   const completed=[email,alt_email,image_url,Mob_no,Username].filter(value=> value!==null &&value!==undefined &&value!=="").length
