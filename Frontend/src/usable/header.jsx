@@ -21,7 +21,7 @@ function Header(){
     return(
 
         <header class="w-full max-w-6xl mx-auto px-4 pt-4 sm:pt-6">
-  <div class="md:flex overflow-x-hidden bg-white/80 backdrop-blur-md border border-slate-200/60 rounded-3xl px-4 sm:px-6 py-3.5 shadow-xl shadow-slate-100/40  md:items-center md:justify-between gap-4">
+  <div class="md:flex overflow-x-hidden bg-white/80 backdrop-blur-md border border-slate-300/60 rounded-3xl px-4 sm:px-6 py-3.5 shadow-xl shadow-slate-100/40  md:items-center md:justify-between gap-4">
     
     <div class="flex items-center gap-2.5 group cursor-pointer select-none">
       <div class="p-2 rounded-2xl bg-gradient-to-tr from-cyan-400 via-indigo-400 to-purple-500 text-white shadow-md shadow-indigo-200 group-hover:scale-105 transition-transform duration-300">

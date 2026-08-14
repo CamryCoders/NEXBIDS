@@ -90,10 +90,9 @@ const [pr_bid,setpr_bid]=useState("")
         <GenerateToken/>
         <div className="bg-slate-950 text-slate-100 min-h-screen w-full font-sans">
 
-    {/* 1. HERO SECTION (1/4 Page height on desktop, Left: Text, Right: Image) */}
     <section className="w-full min-h-[35vh] lg:min-h-[25vh] bg-slate-900 border-b border-slate-800 px-6 py-8 md:px-12 flex flex-col lg:flex-row items-center justify-between gap-8">
         
-        {/* Left Side: Text Information */}
+     
         <div className="w-full lg:w-1/2 space-y-3">
             <span className="inline-block px-3 py-1 bg-violet-500/10 border border-violet-500/20 text-violet-400 text-xs font-semibold rounded-full uppercase tracking-wider">
                 Next-Gen Bidding
@@ -106,7 +105,6 @@ const [pr_bid,setpr_bid]=useState("")
             </p>
         </div>
 
-        {/* Right Side: Image Showcase */}
         <div className="w-full lg:w-1/2 h-48 sm:h-64 lg:h-56 rounded-2xl overflow-hidden border border-slate-800 shadow-2xl relative">
             <img 
                 src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=1000&q=80" 
@@ -120,24 +118,19 @@ const [pr_bid,setpr_bid]=useState("")
 
     </section>
 
-    {/* MAIN CONTENT CONTAINER */}
     <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-12">
 
-        {/* 2. CATEGORIES SECTION (Horizontally Scrollable) */}
         <section className="space-y-4">
             <div className="flex items-center justify-between">
                 <h2 className="text-xl font-bold text-white tracking-wide">Explore Categories</h2>
-                <span className="text-xs text-slate-500 uppercase tracking-widest">Scroll &rarr;</span>
+                <span className="text-xs text-slate-500 uppercase tracking-widest">Scroll</span>
             </div>
 
             
             <div className="flex items-center gap-4 overflow-x-auto pb-4 scrollbar-none scroll-smooth">
                 
-                {/* Category Item Example (Duplicate as needed) */}
                 <div className="flex-none bg-slate-900 border border-slate-800 hover:border-violet-500/50 p-4 rounded-2xl flex items-center gap-3 cursor-pointer transition-all duration-300 w-48 group">
-                    {/* ICON PLACEHOLDER AREA */}
                     <div className="w-10 h-10 rounded-xl bg-violet-600/10 border border-violet-500/20 flex items-center justify-center text-violet-400 shrink-0 group-hover:bg-violet-600 group-hover:text-white transition-colors duration-300">
-                        {/* Add your Icon SVG here */}
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-5 h-5">
                             <path strokeLinecap="round" strokeLinejoin="round" d="M9.53 16.122a3 3 0 0 0-5.78 1.128 2.25 2.25 0 0 1-2.4 2.245 4.5 4.5 0 0 0 8.4-2.245c0-.399-.078-.78-.22-1.128Zm0 0a15.998 15.998 0 0 0 3.388-1.62m-5.006-2.001a4.5 4.5 0 1 1 5.006 2.001m0 0a15.998 15.998 0 0 0 3.388 1.62m-5.006-2.001a15.998 15.998 0 0 1 3.388-1.62m-3.388 1.62L12 12" />
                         </svg>
