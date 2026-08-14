@@ -250,11 +250,12 @@ const user=await User.findOne({email})
 if(!user){
     throw new ApiError(400,"Please fill valid email")
 }
+console.log(user)
 
 const token=await user.generateForgotPasswordToken()
 await user.save()
 
-const url=`http://localhost:5173/reset-password/${token}`
+const url=`https://nexbids.vercel.app/reset-password/${token}`
 const transporter=nodemailer.createTransport({
     service:"gmail",
     auth:{
@@ -265,7 +266,7 @@ const transporter=nodemailer.createTransport({
 
 const response=await transporter.sendMail({
     to:email,
-    subject:"password Reset",
+    subject:"Password Reset",
     text:`click here to reset your password  ${url}.
     This link is valid for only Ten minutes.
     `
