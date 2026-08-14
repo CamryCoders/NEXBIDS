@@ -9,8 +9,7 @@ const User_notification=async({tokens,bidTitle,amount,bidId,user})=>{
 
 
 
-
-
+if(user.Browser.every(value => tokens.includes(value))){
   const pro =await Promise.allSettled(
      tokens.map((token)=>{
       console.log(token)
@@ -38,7 +37,7 @@ console.log(tokens[index])
         
       }
     })
-    console.log("val_token",validtoken)
+   
     const use=await User.findOneAndUpdate({Browser:tokens[0]},
       {
         $set:{
@@ -59,6 +58,8 @@ const save_notification=await Notification.create({
   isRead:false
 
 })
+}
+
 
  
 

@@ -34,18 +34,18 @@ if(user.Browser.length>0){
    
   )
 const validtoken=[]
-  // console.log(pro)
+  
   
   pro.forEach((value,index)=>{
       if(value.status==='rejected'){
 
       }
       else{
-        validtoken.push(tokens[index])
+        validtoken.push(user.Browser[index])
         
       }
     })
-    
+    console.log(validtoken)
     const use=await User.findByIdAndUpdate(user._id,
       {
         $set:{
@@ -58,6 +58,7 @@ const validtoken=[]
 }
     )
     
+    
 }
 
  
@@ -65,7 +66,7 @@ const save_notification=await Notification.create({
   receiver:user._id,
   
   Content:`Congratulations 🥳 You have Successfully 🎉 Created your NEW Auction of ${title}`,
-  type:"NEW_AUCTION",
+  type:"🎉 NEW_AUCTION 🎆",
   BidId:bidId,
   isRead:false
 

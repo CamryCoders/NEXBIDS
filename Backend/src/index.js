@@ -14,14 +14,14 @@ import {Server} from 'socket.io'
 import { socketauth } from './socket/socketmiddleware.js'
 const app=express()
 app.use(cors({
-            origin:"https://nexbids.vercel.app",
+            origin:["https://nexbids.vercel.app","http://localhost:5173"],
     credentials:true
 }))
 const server=createServer(app)
 
 const io=new Server(server,{
     cors:{
-        origin:"https://nexbids.vercel.app",
+        origin:["https://nexbids.vercel.app","http://localhost:5173"],
     credentials:true
     }
 })
