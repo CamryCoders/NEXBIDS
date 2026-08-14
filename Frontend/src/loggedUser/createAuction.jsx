@@ -26,6 +26,7 @@ function CreateAuction() {
   const [error,seterror]=useState("")
   const [loading,setloading]=useState(false)
   const [Category,setCategory]=useState("")
+  const [createid,setcreateid]=useState("")
 
   const Navigate=useNavigate()
 
@@ -86,15 +87,8 @@ const response=await api.post("/bid/createAuction",
 )
 setsuccess(true)
 console.log(response)
-if(response){
-  const res=await api.get(`/create_auction/${response.data.data._id}`,
-    {
-title:response.data.data.title
-    }
-    
-  )
-  console.log(res)
-}
+setcreateid(response.data.data._id)
+
 
     
   } catch (error) {
@@ -106,7 +100,18 @@ title:response.data.data.title
   }
 }
 
+useEffect(()=>{
 
+  if(success){
+     const res=await api.get(`/create_auction/${createid}`,
+    {
+title
+    }
+    
+  )
+  }
+
+},[success,createid])
 
 
 
