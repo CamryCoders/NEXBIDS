@@ -42,6 +42,10 @@ const registerUser= asyncHandler( async(req,res)=>{
     if([email,password,username].some((field)=>field?.trim()==="")){
         throw new ApiError(400,"all fields are compulsory")
     }
+
+    if(!email.includes('@')&&(!email.includes('.com'))){
+        throw new ApiError(400,"Invalid Email")
+    }
     const user_exist=await User.findOne({
         $or:[{username},{email}]
     })
