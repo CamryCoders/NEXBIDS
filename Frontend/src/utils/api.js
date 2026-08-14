@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 const api=axios.create({
-    baseURL:"https://nexbids.vercel.app/api/v1/users",
+    baseURL:"https://nexbids.onrender.com/api/v1/users",
 
     withCredentials:true
 })
