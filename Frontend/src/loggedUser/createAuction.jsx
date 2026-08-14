@@ -102,7 +102,8 @@ setcreateid(response.data.data._id)
 
 useEffect(()=>{
 
-  if(success){
+  const fxn=async()=>{
+if(success){
      const res=await api.get(`/create_auction/${createid}`,
     {
 title
@@ -110,6 +111,9 @@ title
     
   )
   }
+  
+  }
+  fxn()
 
 },[success,createid])
 
