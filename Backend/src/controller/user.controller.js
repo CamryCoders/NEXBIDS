@@ -43,7 +43,7 @@ const registerUser= asyncHandler( async(req,res)=>{
         throw new ApiError(400,"all fields are compulsory")
     }
 
-    if(!email.includes('@')&&(!email.includes('.com'))){
+    if(!email.includes('@')||(!email.includes('.'))){
         throw new ApiError(400,"Invalid Email")
     }
     const user_exist=await User.findOne({
