@@ -254,10 +254,8 @@ throw new ApiError(404,"User not found")
         },
         Later:{
             $gte:Date.now()
-        },
-        createdBy:{
-            $ne: new mongoose.Types.ObjectId(user._id)
         }
+       
     }
 }
 ])
@@ -275,6 +273,9 @@ const PremiumBid=async(req,res)=>{
             },
             highestBid:{
                 $gte:50000
+            },
+            Later:{
+                $lte:Date.now()
             }
         }
     }
@@ -320,13 +321,13 @@ console.log(user)
                     $ne:new mongoose.Types.ObjectId(user._id)
 
                 },
-                Category:Category
+                Category:Category,
+                Later:{
+                    $lte:Date.now()
+                }
             } 
 
                 
-
-        },{
-            $count:"count"
 
         }])
 
