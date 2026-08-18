@@ -34,7 +34,7 @@ return (()=>clearInterval(interval))
       },[])
 
   function getBidPage(){
-    if(second<1 &&minute==0&&hours==0){
+    if(second<1 &&minute<=0&&hours<=0){
       Navigate(`/user/bid/analysis/${BidId}`)
     }
     else{

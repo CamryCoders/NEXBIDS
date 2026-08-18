@@ -14,6 +14,6 @@ lastmessage:{
     type:String,
     required:true
 }
-})
+},{timestamps:true})
 
 export const Conversation= new mongoose.model("Conversation",conversation_schema)

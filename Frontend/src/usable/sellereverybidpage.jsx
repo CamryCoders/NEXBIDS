@@ -33,11 +33,42 @@ function SellerEachbidpage() {
   const [analysis_open,setanalysis_open]=useState(false)
   const [top5bidder,settop5bidder]=useState([])
 
+ function timeAgo(createdAt) {
+  const now = new Date();
+  const created = new Date(createdAt);
 
-useEffect(()=>{
+  const diff = now - created; 
+  const seconds = Math.floor(diff / 1000);
+  const minutes = Math.floor(seconds / 60);
+  const hours = Math.floor(minutes / 60);
+  const days = Math.floor(hours / 24);
 
+  if (seconds < 60) {
+    return "just now";
+  }
 
-},[])
+  if (minutes < 60) {
+    return `${minutes} minute${minutes !== 1 ? "s" : ""} ago`;
+  }
+
+  if (hours < 24) {
+    return `${hours} hour${hours !== 1 ? "s" : ""} ago`;
+  }
+
+  if (days < 30) {
+    return `${days} day${days !== 1 ? "s" : ""} ago`;
+  }
+
+  const months = Math.floor(days / 30);
+
+  if (months < 12) {
+    return `${months} month${months !== 1 ? "s" : ""} ago`;
+  }
+
+  const years = Math.floor(days / 365);
+  return `${years} year${years !== 1 ? "s" : ""} ago`;
+}
+
 
 useEffect(()=>{
    const fxn=(data)=>{
@@ -276,7 +307,7 @@ const all_msg_user=async()=>{
               <div class="space-y-1.5">
 
  {
-top5bidder.length>0?top5bidder.map((bidder,i)=>{
+top5bidder?top5bidder.map((bidder,i)=>{
 return <div key={i} class="flex  items-center justify-between p-2.5 rounded-xl bg-indigo-50/40 border border-indigo-100/50 text-xs">
                   <div class="flex items-center gap-2">
                     <span class={`w-5 h-5 rounded-md  text-[10px] font-black text-white flex ${i==0?"bg-indigo-600":"bg-slate-700"} items-center justify-center`}>{i+1}</span>
@@ -285,7 +316,7 @@ return <div key={i} class="flex  items-center justify-between p-2.5 rounded-xl b
                   </div>
                   <div class="text-right">
                     <span class={`font-black  ${i==0?"text-indigo-600":"text-slate-700"} mr-3`}>Rs{bidder.amount}</span>
-                    <span class="text-slate-400 font-semibold text-[10px]">Just now</span>
+                    <span class="text-slate-400 font-semibold text-[10px]">{timeAgo(bidder.createdAt)}</span>
                   </div>
                 </div>
 }):<></>
@@ -301,6 +332,7 @@ return <div key={i} class="flex  items-center justify-between p-2.5 rounded-xl b
 
            {open?<ChatInterface
              customer_list={all_chat_user} 
+             BidId={BidId}
              />:<></>
 
            }  

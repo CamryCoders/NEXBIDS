@@ -9,7 +9,7 @@ const all_notification=asyncHandler(async(req,res)=>{
     if(!user){
         throw new ApiError(402,"User not found")
     }
-    const notification=await Notification.find({receiver:user._id})
+    const notification=(await Notification.find({receiver:user._id}).sort({createdAt:-1}))
  const read_notification=await Notification.updateMany({receiver:user._id},
         {
             $set:{

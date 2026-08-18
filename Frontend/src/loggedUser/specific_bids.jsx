@@ -6,16 +6,16 @@ import { Loader } from '../usable/loading.jsx'
 
 
 function SpecificBid(){
-    const Category=useParams()
+    const {Category}=useParams()
     const [Allbid,setAllbid]=useState([])
     const [loader,setloader]=useState(true)
 
 const getallbid=async()=>{
 
-const allbid=await api.get(`/category_auction/${Category}`)
+const allbid=await api.get(`/bid/category_auction/${Category}`)
 
 
-console.log(allbid.data.data[0])
+console.log(allbid)
 
 return allbid.data.data
 
@@ -33,7 +33,7 @@ useEffect(()=>{
     setloader(false)
    }).catch((error)=>{
     setloader(true)
-    console.log(error.response)
+    console.log(error.message)
    })
 
 
@@ -51,7 +51,7 @@ console.log(loader)
          return(
         <>
         {
-            Allbid.map((bid)=>{
+            Allbid.length>1?Allbid.map((bid)=>{
                 return(
                     <BidComponent key={bid._id}
         
@@ -63,7 +63,7 @@ console.log(loader)
         
         />
                 )
-            })
+            }):<></>
         }
        
         

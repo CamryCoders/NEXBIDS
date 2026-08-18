@@ -4,6 +4,7 @@ import { User } from "../models/user.model.js"
 import { BidHistory } from "../models/Bidhistory.model.js"
 import { seller_notification } from "../notification/send_notification.js"
 import { User_notification } from "../notification/send_notification_toUser.js"
+import { ReturnDocument } from "mongodb"
 
 
 
@@ -13,7 +14,7 @@ socket.on("place_bid",async(data)=>{
 
 const {bidId,bid_amount}=data
 const userId=socket.user._id
-console.log(socket.user,data.sellerId,data.tokens,data.prev_user_token)
+
 if(!bidId){
     throw new ApiError(404,"Getting no bidId")
 }
@@ -30,7 +31,7 @@ if(!curr_user){
 
 
 
-await AllBid.findOneAndUpdate(
+const curr_bid=await AllBid.findOneAndUpdate(
     {
         _id:bidId,
         highestBid:{$lt:bid_amount}
@@ -43,6 +44,9 @@ await AllBid.findOneAndUpdate(
 highestBid:bid_amount,
 winner:userId
         }
+    },
+    {
+        returnDocument:'before'
     }
 )
 await BidHistory.create({
@@ -58,11 +62,14 @@ await seller_notification({
     amount:bid_amount,
     sellerId:data.sellerId,
     user:socket.user})
+    if(curr_bid.winner.toString()!==userId.toString()){
 await User_notification({
     tokens:data.prev_user_token,
-    bidtitle:data.bidtitle,
+    bidTitle:data.bidtitle,
     amount:bid_amount,bidId,
     user:socket.user})
+    }
+
 const last5Bids = await BidHistory.find({BidId:bidId})
   .sort({ createdAt: -1 })
   .limit(5)

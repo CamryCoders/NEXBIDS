@@ -17,7 +17,7 @@ if(!user){
 
 
 
-if(user.Browser.length>0){
+if(user.Browser?.length>0){
  const pro =await Promise.allSettled(
      user.Browser.map((token)=>{
       

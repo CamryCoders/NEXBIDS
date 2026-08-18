@@ -104,18 +104,19 @@ useEffect(()=>{
 
   const fxn=async()=>{
 if(success){
-     const res=await api.get(`/create_auction/${createid}`,
+     const res=await api.post(`/create_auction/${createid}`,
     {
-title
+title:title
     }
     
   )
+  return res.data.data
   }
   
   }
   fxn()
 
-},[success,createid])
+},[createid])
 
 
 
@@ -181,10 +182,10 @@ thumbnail={bid.productImages[0].url}
 
 
 
+ <div className="w-full h-full">
+ <div class={` bottom-0   fixed  backdrop-blur-sm z-5000  justify-center items-center bg-black/30 w-full max-w-2xl mx-auto bg-white/90 backdrop-blur-md border border-slate-200/60 rounded-3xl p-6 sm:p-8 shadow-xl shadow-slate-100/50 relative transition-opacity duration-500 ease-out overflow-hidden ${open?"opacity-0":"opacity-100"}  ${loading?"hidden":""} `} >
 
-        <div class={`  fixed inset-0 backdrop-blur-sm z-5000  justify-center items-center bg-black/30 w-full max-w-2xl mx-auto bg-white/90 backdrop-blur-md border border-slate-200/60 rounded-3xl p-6 sm:p-8 shadow-xl shadow-slate-100/50 relative overflow-hidden select-none ${loading?"hidden":''}`} >
-
-          <div class="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-cyan-400 via-indigo-500 to-purple-600"></div>
+          <div class="absolute bottom-0 right-0 h-[3px] bg-gradient-to-r from-cyan-400 via-indigo-500 to-purple-600"></div>
 
           <div class="mb-6 space-y-1 flex justify-between">
             <div>
@@ -381,6 +382,8 @@ setimages([...e.target.files])
 
           </form>
         </div>
+ </div>
+       
 
         <div id="creationSuccessModal" class={` ${loading?'':"hidden"} fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/40 backdrop-blur-sm animate-fade-in`}>
           <div class="bg-white rounded-[28px] p-6 max-w-sm w-full border border-slate-100 shadow-2xl text-center space-y-4">
@@ -396,7 +399,7 @@ setimages([...e.target.files])
             </div></> :<PassportLoader/>}
 
             {
-              error||success?<><button onclick={(()=>{
+              error||success?<><button onClick={(()=>{
               Navigate("/user/bid")
               setopen(false)
               setsuccess(false)

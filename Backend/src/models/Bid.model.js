@@ -1,3 +1,4 @@
+import { Timestamp } from "mongodb";
 import mongoose,{Schema} from "mongoose";
 
 const BidSchema= new Schema({
@@ -65,6 +66,6 @@ Category:{
 
 
 
-})
+},{timestamps:true})
 
 export const AllBid=new mongoose.model("AllBid",BidSchema)

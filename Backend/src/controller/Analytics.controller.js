@@ -29,14 +29,14 @@ let target=[]
 for(let i=0;i<7;i++){
     target.push(startPr+i*diff)
 }
-console.log(target)
+
 
 let i=0
 let end=Bids.length
 
 let newtargetArr=target.map((target,j)=>{
     if(j!=0){
-        
+     
  while(i>=end){
     mid=Math.trunc((i+end)/2)
     if(target==Bids[i].amount){
@@ -62,7 +62,7 @@ return {
    
 })
 target.push(finalPr)
-console.log("30")
+console.log
 const range_graph=await BidHistory.aggregate([
     {
         $match:{
@@ -74,10 +74,11 @@ const range_graph=await BidHistory.aggregate([
              {$bucket: {
             groupBy:"$amount",
             boundaries:target,
-           default: "Other",
+           default: finalPr,
 
             output:{
-                count:{$sum:1}
+                count:{$sum:1},
+                latestCreatedAt: { $max: "$createdAt" }
             }
         }
     }],
@@ -93,23 +94,39 @@ const range_graph=await BidHistory.aggregate([
         }
    }
    
-        ]
+        ],
+         uniqueUsers: [
+      {
+        $group: {
+          _id: null,
+          uniqueUser: { $addToSet: "$Bidder" }
+        }
+      },
+      {
+        $project: {
+          _id: 0,
+          count: { $size: "$uniqueUser" }
+        }
+      }
+    ]
         
     },
  
    
        
     },
+  
    
     
 ])
+
 
 let all_res=[]
 all_res.push(newtargetArr)
 all_res.push(range_graph)
 
-res.status(200).json(
-    new ApiResponse(200,[newtargetArr,range_graph],"ALl Graphs Fetched Successfully")
+return res.status(200).json(
+    new ApiResponse(200,[newtargetArr,range_graph,particular_Bid.createdAt],"ALl Graphs Fetched Successfully")
 )
 
 }

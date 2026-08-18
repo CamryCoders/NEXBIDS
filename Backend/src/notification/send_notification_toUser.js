@@ -9,10 +9,10 @@ const User_notification=async({tokens,bidTitle,amount,bidId,user})=>{
 
 
 
-if(user.Browser.every(value => tokens.includes(value))){
+if(user.Browser.every(value => tokens?.includes(value))){
   const pro =await Promise.allSettled(
      tokens.map((token)=>{
-      console.log(token)
+      
  return messaging.send({
   notification:{
     title:"OUTBID",

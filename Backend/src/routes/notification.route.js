@@ -10,6 +10,6 @@ const notifyrouter=Router()
 notifyrouter.route("/notify").post(verifyjwt,seller_notification)
 notifyrouter.route("/notify/prev_bidder").post(verifyjwt,User_notification)
 notifyrouter.route("/delete_notification/:id").delete(verifyjwt,delete_notification)
-notifyrouter.route("/create_auction/:bidId").get(verifyjwt,auction_notification)
+notifyrouter.route("/create_auction/:bidId").post(verifyjwt,auction_notification)
 
 export {notifyrouter}

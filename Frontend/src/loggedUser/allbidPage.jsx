@@ -14,7 +14,7 @@ const getallbid=async()=>{
 const allbid=await api.get("/bid/getAllBid")
 
 
-console.log(allbid.data.data[0])
+console.log(allbid.data.data)
 
 return allbid.data.data
 

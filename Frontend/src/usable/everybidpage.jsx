@@ -31,13 +31,25 @@ function Eachbidpage() {
   const [top5bidder,settop5bidder]=useState([])
   const [notified,setnotified]=useState(false)
 
+const chatref=useRef(null)
+useEffect(()=>{
+const fxn=async()=>{
+  const res=await api.get(`/bid/top5bid/${BidId}`)
+  
+  return res.data.data
+}
+fxn().then((res)=>{
+settop5bidder(res)
+})
+
+},[])
+
 
   function timeAgo(createdAt) {
   const now = new Date();
   const created = new Date(createdAt);
 
-  const diff = now - created; // milliseconds
-
+  const diff = now - created; 
   const seconds = Math.floor(diff / 1000);
   const minutes = Math.floor(seconds / 60);
   const hours = Math.floor(minutes / 60);
@@ -68,6 +80,12 @@ function Eachbidpage() {
   const years = Math.floor(days / 365);
   return `${years} year${years !== 1 ? "s" : ""} ago`;
 }
+useEffect(()=>{
+if(chatref.current){
+  chatref.current.ScrollTop=chatref.current.ScrollHeight;
+}
+},[chat])
+
 
   useEffect(() => {
     apibid().then(async(response) => {
@@ -273,7 +291,11 @@ return ()=>{
 
   const all_chat=async()=>{
     try {
-      const res=await api.get(`/bid/all_message/${sellerId}`)
+      const res=await api.get(`/bid/all_message/${sellerId}`,{
+        params:{
+          BidId
+        }
+      })
       console.log(res)
       setchat(res.data.data)
       
@@ -333,13 +355,18 @@ return ()=>{
                 {bidDetail[0].Description}
               </p>
 
-<details className='w-full bg-indigo-100 border-1 border-indigo-200 rounded-lg'>
-<summary className='p-2 Font-Bold '>More Details</summary>
-<span className='ml-3 font-Bold '>Width:</span><span className='p-2 bg-white text-black font-bold text-md m-2  rounded-md'>{bidDetail[0].width} cm</span>
-<span className='ml-3 font-Bold'>Height:</span><span className='p-2 bg-white text-black font-bold text-md m-2 rounded-md'>{bidDetail[0].height}cm</span>
-<span className='ml-3 font-Bold'>Weight:</span><span className='p-2 bg-white text-black font-bold text-md m-2 rounded-md'>{bidDetail[0].weight}</span>
-<span className='ml-3  font-Bold'>Color:</span><span className='p-2 bg-white text-black font-bold text-md m-2 rounded-md'>{bidDetail[0].color}</span>
+<details className='w-full bg-indigo-100 border-1 border-indigo-400 border-2 rounded-lg'>
+<summary className='p-2 Font-Bold  sm:flex '>More Details</summary>
+<div className='flex mb-3 '>
+<span className='ml-3 font-Bold '>Width: <span className='p-1 font-playfair border border-rose-200 bg-white text-black font-serif italic text-md m-1  rounded-lg'>{bidDetail[0].width} cm</span> </span>
+<span className='ml-3 font-Bold'>Height:<span className='p-1 border border-rose-200 bg-white text-black font-serif italic text-md m-1 rounded-lg'>{bidDetail[0].height}cm</span></span>
+</div>
 
+<div  className='flex mb-3'>
+  <span className='ml-3 font-Bold'>Weight:<span className='p-1 border border-rose-200 bg-white text-black font-serif italic text-md m-2 rounded-lg'>{bidDetail[0].weight}</span></span>
+<span className='ml-3  font-Bold'>Color:<span className='p-1 border border-rose-200 bg-white text-black font-serif italic text-md m-2 rounded-lg'>{bidDetail[0].color}</span></span>
+
+</div>
 
 
 </details>
@@ -378,7 +405,7 @@ return ()=>{
               <div class="space-y-1.5">
 
     {
-top5bidder.length>0?top5bidder.map((bidder,i)=>{
+top5bidder?top5bidder.map((bidder,i)=>{
 return <div key={i} class="flex  items-center justify-between p-2.5 rounded-xl bg-indigo-50/40 border border-indigo-100/50 text-xs">
                   <div class="flex items-center gap-2">
                     <span class={`w-5 h-5 rounded-md  text-[10px] font-black text-white flex ${i==0?"bg-indigo-600":"bg-slate-700"} items-center justify-center`}>{i+1}</span>
@@ -456,7 +483,7 @@ return <div key={i} class="flex  items-center justify-between p-2.5 rounded-xl b
                       </button>
                     </div>
 
-                    <div className=' overflow-y-auto scrollbar-none w-98/100 h-full p-3 rounded-2xl bg-red-300  flex-4 m-1 shadow-md shadow-slate-500'>
+                    <div ref={chatref} className=' overflow-y-auto scrollbar-none w-98/100 h-full p-3 rounded-2xl bg-red-300  flex-4 m-1 shadow-md shadow-slate-500'>
                     {
                       chat.length>0?chat.map((msg,index)=>{
                         return(

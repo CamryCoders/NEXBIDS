@@ -105,6 +105,10 @@ const getAllBid=async(req,res)=>{
             }
         }
     },{
+        $sort:{
+            createdAt:-1
+        }
+    },{
         $addFields:{
             bidType:{
                 $cond:{
@@ -137,6 +141,7 @@ const bidDetail=async(req,res)=>{
    if(bid.Duration<Date.now()){
     throw new ApiError(404,"Auction has Ended")
    }
+   console.log(4)
     const Bid=await AllBid.aggregate([{
         $match:{
             _id:new mongoose.Types.ObjectId(bidId)
@@ -226,6 +231,10 @@ const allbid=await AllBid.aggregate([
         $match:{
             createdBy:user._id
         }
+    },{
+        $sort:{
+            createdAt:-1
+        }
     }])
 
 
@@ -285,27 +294,29 @@ const top5bid=asyncHandler(async(req,res)=>{
         throw new ApiError(402,"User not found")
     }
     const {bidId}=req.params
-    const last5Bids = await BidHistory.find( bidId._id )
+    const last5Bids = await BidHistory.find({BidId:bidId})
       .sort({ createdAt: -1 })
       .limit(5)
       .populate("amount", "username");
+      console.log(last5Bids)
  return res.status(200).json(
     new ApiResponse(200,last5Bids,"Top 5 Bids fetched successfully")
  )
 
 })
 
-const specific_Bid=asyncHandler(async(req,res)=>{
+const specific_Bid=(async(req,res)=>{
     const {Category}=req.params
     const user=req.user
+    console.log(Category)
     if(!user){
         throw new ApiError(402,"User not found")
     }
-
+console.log(user)
     const All_specific_Bid=await AllBid.aggregate([
         {
             $match:{
-                $createdBy:{
+                createdBy:{
                     $ne:new mongoose.Types.ObjectId(user._id)
 
                 },
@@ -320,8 +331,54 @@ const specific_Bid=asyncHandler(async(req,res)=>{
         }])
 
         res.status(200).json(
-            new ApiResponse(200,"Specific Auction Fetched Successfully")
+            new ApiResponse(200,All_specific_Bid,"Specific Auction Fetched Successfully")
         )
+})
+
+const analysis_biddetail=asyncHandler(async(req,res)=>{
+ const {bidId}=req.params
+     
+    if(!bidId){
+        throw new ApiError(404,"No Such Auction found")
+    }
+const Bid=await AllBid.aggregate([{
+        $match:{
+            _id:new mongoose.Types.ObjectId(bidId)
+        }
+    },{
+        $lookup:{
+            from:"users",
+            localField:"createdBy",
+            foreignField:"_id",
+            as:"seller",
+            pipeline:[{
+                $project:{
+                    username:1,
+                    avatar:1,
+                    Browser:1
+                }
+            }]
+        }
+    },{
+        $lookup:{
+            from:"users",
+            localField:"winner",
+            foreignField:"_id",
+            as :"current_user",
+            pipeline:[{
+                $project:{
+                    username:1,
+                    avatar:1,
+                    Browser:1
+                }
+            }]
+        }
+    }
+       
+    ])
+    return res.status(200).json(
+    new ApiResponse(200,Bid,"Analysis bid_Detail fetched successfully")
+)
 })
 
 
@@ -335,5 +392,6 @@ export{
     upcomingBid,
     PremiumBid,
     top5bid,
-    specific_Bid
+    specific_Bid,
+    analysis_biddetail
 }

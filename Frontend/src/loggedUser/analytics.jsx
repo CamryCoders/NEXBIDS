@@ -8,7 +8,19 @@ function Analysis(){
   const [Bid,setBid]=useState([])
   const [Loading,setLoading]=useState(true)
   const [analysis,setanalysis]=useState([])
+  const [highestBid,sethighestBid]=useState("")
+  const [username,setusername]=useState("")
+  const [percent,setpercent]=useState("")
+  const [startingPrice,setstartingPrice]=useState("")
+  const [Growth,setGrowth]=useState("")
+  const [Bidder,setBidder]=useState("")
+  const [border_bid,setborder_bid]=useState([])
+  const [border_time,setborder_time]=useState([])
+  const [avg,setavg]=useState("")
+  
 
+
+  
   useEffect(()=>{
 const fxn=async()=>{
   const res=await api.get(`/bid/analysis/${bidId}`)
@@ -17,21 +29,35 @@ const fxn=async()=>{
 }
 fxn().then((res)=>{
   setanalysis(res)
+ setBidder(res[1][0].uniqueUsers[0].count)
+ setborder_bid(res[1][0].bucket.map((item)=>item._id))
+ setborder_time(res[1][0].bucket.map((item)=>item.latestTime))
+ setavg(res[1][0].average[0].avg)
+ 
 })
+
   },[])
 useEffect(()=>{
   async function apibid() {
   
-      const response = await api.get(`/bid/bidDetail/${bidId}`)
+      const response = await api.get(`/bid/analysis_bidDetail/${bidId}`)
   console.log(response)
       return response.data.data[0]
   
     }
 
     apibid().then((res)=>{
+      
 setBid(res)
+setusername(res.current_user[0]?.username)
+sethighestBid(res.highestBid)
+setstartingPrice(res.startingPrice)
+setGrowth(Math.ceil((res.highestBid-res.startingPrice)*100/res.startingPrice))
+
+
 setLoading(false)
     })
+    
 },[])
 if (Loading){
   return <Loader/>
@@ -47,26 +73,26 @@ if (Loading){
         
         <div class="flex flex-col justify-center items-center p-2">
           <span class="text-xs uppercase tracking-wider font-semibold text-slate-400">Winner</span>
-          <span class="text-base font-bold text-indigo-600 truncate max-w-[120px] mt-0.5">{Bid.current_user[0].username}</span>
+          <span class="text-base font-bold text-indigo-600 truncate max-w-[120px] mt-0.5">{username}</span>
         </div>
 
        
         <div class="flex flex-col justify-center items-center p-2">
           <span class="text-xs uppercase tracking-wider font-semibold text-slate-400">Highest Bid</span>
-          <span class="text-base font-black text-slate-900 mt-0.5">Rs{Bid.highestBid}</span>
+          <span class="text-base font-black text-slate-900 mt-0.5">Rs{highestBid}</span>
         </div>
 
        
         <div class="flex flex-col justify-center items-center p-2">
           <span class="text-xs uppercase tracking-wider font-semibold text-slate-400">Start Price</span>
-          <span class="text-base font-bold text-slate-500 mt-0.5">Rs{Bid.startingPrice}</span>
+          <span class="text-base font-bold text-slate-500 mt-0.5">Rs{startingPrice}</span>
         </div>
 
        
         <div class="flex flex-col justify-center items-center p-2">
           <span class="text-xs uppercase tracking-wider font-semibold text-slate-400">Growth</span>
           <span class="inline-flex items-center gap-1 text-base font-black text-emerald-600 mt-0.5">
-            {Math.ceil((Bid.highestBid-Bid.startingPrice)*100/Bid.startingPrice)}%
+            {Growth}%
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path></svg>
           </span>
         </div>
@@ -74,13 +100,13 @@ if (Loading){
         
         <div class="flex flex-col justify-center items-center p-2">
           <span class="text-xs uppercase tracking-wider font-semibold text-slate-400">Bidders</span>
-          <span class="text-base font-bold text-slate-900 mt-0.5">342 People</span>
+          <span class="text-base font-bold text-slate-900 mt-0.5">{Bidder} People</span>
         </div>
 
        
         <div class="flex flex-col justify-center items-center p-2">
           <span class="text-xs uppercase tracking-wider font-semibold text-slate-400">Avg Bid</span>
-          <span class="text-base font-bold text-slate-900 mt-0.5">Rs {analysis.length>=1?Math.ceil(analysis[1][0].average[0].avg):"Loading.."}  </span>
+          <span class="text-base font-bold text-slate-900 mt-0.5">Rs {analysis?.length>=0?Math.ceil(avg):"Loading.."}  </span>
         </div>
 
       </div>
@@ -115,18 +141,14 @@ if (Loading){
             </div>
 
            {
-            analysis.length>=1?analysis[0].map((bar,i)=>{
+            analysis.length>0?analysis[0].map((bar,i)=>{
 return (
-            <div class={`flex-1 bg-indigo-100 hover:bg-indigo-600 transition-colors rounded-t-lg font-semibold ${i==6?"bg-indigo-500":""} title="00:00 - $5k`} style={{ height: `${(i + 1) * 14}%` }}>Rs { bar.target}k</div>
+            <div  key={i} class={`flex-1  hover:bg-indigo-600 transition-colors flex justify-center rounded-t-lg text-slate-800 text-md font-semibold ${i==5?"bg-indigo-500":"bg-slate-300"} title="00:00 - $5k`} style={{ height: `${(i + 1) * 14}%` }}>Rs { i!=0?(bar.target).toFixed(1):(bar.target/1000).toFixed(1)}k</div>
 
 )
             }):<></>
            }
-            {/* <div class="flex-1 bg-indigo-100 hover:bg-indigo-600 transition-colors h-[25%] rounded-t-sm" title="04:00 - $5.5k">$5.5k</div>
-            <div class="flex-1 bg-indigo-200 hover:bg-indigo-600 transition-colors h-[30%] rounded-t-sm" title="08:00 - $6.2k">$6.2k</div>
-            <div class="flex-1 bg-indigo-300 hover:bg-indigo-600 transition-colors h-[45%] rounded-t-sm" title="12:00 - $8.1k">$8.1k</div>
-            <div class="flex-1 bg-indigo-400 hover:bg-indigo-600 transition-colors h-[60%] rounded-t-sm" title="16:00 - $10.5k">$10.5k</div>
-            <div class="flex-1 bg-indigo-500 hover:bg-indigo-600 transition-colors h-[80%] rounded-t-sm" title="20:00 - $12.8k">$12.8k</div> */}
+           
            
           </div>
         
@@ -155,35 +177,22 @@ return (
 {
   analysis.length>=1?analysis[1][0].bucket.map((analysis,i)=>{
 return (
-<div class="w-full bg-slate-100 hover:bg-emerald-500 transition-colors  rounded-t-md group relative" style={{height:`${(analysis.count) * 10}%`}}>
-              <span class="opacity-0 group-hover:opacity-100 absolute -top-6 left-1/2 -translate-x-1/2 text-[10px] font-bold bg-slate-800 text-white py-0.5 px-1 rounded">{analysis.count}</span>
+<div key={i} class={`w-full  hover:bg-emerald-500 transition-colors  rounded-t-md group relative  ${i==3?"bg-emerald-500":"bg-slate-200"}  `} style={{height:`${(analysis.count) * 10}%`}}>
+              <span class={`opacity-0 group-hover:opacity-100 ${i==3?"opacity-100":""} absolute -top-6 left-1/2 -translate-x-1/2 text-[10px] font-bold bg-slate-800 text-white py-0.5 px-1 rounded`}>{analysis.count}</span>
             </div>
 )
   }):<></>
 }
 
             
-            {/* <div class="w-full bg-slate-100 hover:bg-emerald-500 transition-colors h-[65%] rounded-t-md group relative">
-              <span class="opacity-0 group-hover:opacity-100 absolute -top-6 left-1/2 -translate-x-1/2 text-[10px] font-bold bg-slate-800 text-white py-0.5 px-1 rounded">110</span>
-            </div>
-            <div class="w-full bg-emerald-500 h-[95%] rounded-t-md group relative">
-              <span class="absolute -top-6 left-1/2 -translate-x-1/2 text-[10px] font-bold bg-slate-800 text-white py-0.5 px-1 rounded">150</span>
-            </div>
-            <div class="w-full bg-slate-100 hover:bg-emerald-500 transition-colors h-[25%] rounded-t-md group relative">
-              <span class="opacity-0 group-hover:opacity-100 absolute -top-6 left-1/2 -translate-x-1/2 text-[10px] font-bold bg-slate-800 text-white py-0.5 px-1 rounded">28</span>
-            </div>
-            <div class="w-full bg-slate-100 hover:bg-emerald-500 transition-colors h-[10%] rounded-t-md group relative">
-              <span class="opacity-0 group-hover:opacity-100 absolute -top-6 left-1/2 -translate-x-1/2 text-[10px] font-bold bg-slate-800 text-white py-0.5 px-1 rounded">9</span>
-            </div> */}
+           
           </div>
          
-          <div class="flex justify-between text-[11px] font-medium text-slate-400 mt-2">
+          <div class="flex justify-between text-[11px] font-medium text-slate-500 mt-2">
 
             {
-              analysis.length>=1?analysis[1][0].bucket.map((analysis,i)=>{
-                return (
-                  <span> </span>
-                )
+              border_bid.length>0?border_bid.map((item,i)=>{
+return <span key={i}>{(border_bid[i]/1000).toFixed(1)}k - {i!=5?(border_bid[i+1]/1000).toFixed(1):""}k  </span>
               }):<></>
             }
             
@@ -198,7 +207,7 @@ return (
         <div class="bg-white border border-slate-200 shadow-sm rounded-2xl overflow-hidden p-4">
           <div class="relative group rounded-xl overflow-hidden bg-slate-100 aspect-square">
             <img 
-            src={Bid.productImages[0].url}
+            src={Bid?.productImages[0].url}
               alt="Auctioned Product" 
               class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
             />

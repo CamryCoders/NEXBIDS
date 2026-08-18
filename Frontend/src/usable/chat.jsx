@@ -5,7 +5,7 @@ import { socket } from '../utils/socket.js';
 import { use } from 'react';
 
 
-export default function ChatInterface({customer_list}) {
+export default function ChatInterface({customer_list,BidId}) {
   const [customer_detail,setcustomer_detail]=useState(customer_list)
   const [openindex,setopenindex]=useState(null)
   const [curr_user_chat,setcurr_user_chat]=useState("")
@@ -53,8 +53,16 @@ return ()=>{
 
 
   const get_user_message=async(id)=>{
+    
     try {
-      const res=await api.get(`/bid/all_message/${id}`)
+      const res=await api.get(`/bid/all_message/${id}`,
+        {
+          params:{
+BidId
+          }
+          
+        }
+      )
       console.log(res)
       setall_message(res.data.data)
       

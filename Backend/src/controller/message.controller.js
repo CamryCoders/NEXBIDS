@@ -18,7 +18,7 @@ const conversations = await Conversation.find({
   participants: user._id,
   BidId:bidId
 }).populate("participants", "username avatar");
-console.log(conversations)
+
 // const usermessage=await Message.aggregate([{
 //     $match:{
 //         BidId:new mongoose.Types.ObjectId(bidId),
@@ -40,24 +40,31 @@ console.log(conversations)
 //     }
 // }])
 
-console.log(conversations)
+
 return res.status(200).json(
     new ApiResponse(200,conversations,"all user fetched successfully")
 )
 
 })
 const all_message=asyncHandler(async(req,res)=>{
+    console.log("entered in all message")
     const seller_id=req.user._id
+    console.log(seller_id)
     const {customer_id}=req.params
-    console.log(customer_id,req.user._id)
+    console.log(customer_id)
+   const{BidId}=req.query
+   
+   console.log("BidId",BidId)
 
 
     const convers=await Conversation.findOne({
         participants:{
             $all:[new mongoose.Types.ObjectId(customer_id),seller_id]
-        }
+        },
+        BidId:BidId
+        
     })
-    console.log("convers",convers)
+   
     if(!convers){
         throw new ApiError(404,"No such message with this user found")
     }
@@ -65,7 +72,7 @@ const all_message=asyncHandler(async(req,res)=>{
         $match:{conversationId:new mongoose.Types.ObjectId(convers._id)}
     },
 ])
-
+console.log(messages)
 
 return res.status(200).json(
     new ApiResponse(200,messages,"All message fetched Successfully")
