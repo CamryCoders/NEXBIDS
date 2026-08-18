@@ -152,11 +152,19 @@ const moveToRegister=()=>{
 
           {/* The Exact Two CTAs Required */}
           <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4">
-            <button className="w-full sm:w-auto relative group overflow-hidden px-8 py-4 rounded-2xl text-base font-bold text-black bg-gradient-to-r from-cyan-400 via-teal-400 to-indigo-500 bg-[size:200%_auto] hover:bg-right transition-all duration-500 shadow-[0_0_30px_rgba(34,211,238,0.3)] hover:shadow-[0_0_40px_rgba(99,102,241,0.5)] transform hover:-translate-y-0.5 active:translate-y-0 flex items-center justify-center gap-2">
+            <button
+            onClick={(()=>{
+              Navigate("/Register")
+            })}
+            className="w-full sm:w-auto relative group overflow-hidden px-8 py-4 rounded-2xl text-base font-bold text-black bg-gradient-to-r from-cyan-400 via-teal-400 to-indigo-500 bg-[size:200%_auto] hover:bg-right transition-all duration-500 shadow-[0_0_30px_rgba(34,211,238,0.3)] hover:shadow-[0_0_40px_rgba(99,102,241,0.5)] transform hover:-translate-y-0.5 active:translate-y-0 flex items-center justify-center gap-2">
               Get Started (Register)
               <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
             </button>
-            <button className="w-full sm:w-auto px-8 py-4 rounded-2xl text-base font-bold text-slate-200 border border-white/10 bg-white/[0.02] backdrop-blur-md hover:bg-white/[0.08] hover:border-white/20 transition-all duration-300 transform hover:-translate-y-0.5 active:translate-y-0 flex items-center justify-center">
+            <button
+             onClick={(()=>{
+              Navigate("/Login")
+            })}
+            className="w-full sm:w-auto px-8 py-4 rounded-2xl text-base font-bold text-slate-200 border border-white/10 bg-white/[0.02] backdrop-blur-md hover:bg-white/[0.08] hover:border-white/20 transition-all duration-300 transform hover:-translate-y-0.5 active:translate-y-0 flex items-center justify-center">
               Login to Console
             </button>
           </div>
