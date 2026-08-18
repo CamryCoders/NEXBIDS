@@ -51,7 +51,7 @@ console.log(loader)
          return(
         <>
         {
-            Allbid.length>1?Allbid.map((bid)=>{
+            Allbid.length>0?Allbid.map((bid)=>{
                 return(
                     <BidComponent key={bid._id}
         
@@ -71,22 +71,6 @@ console.log(loader)
     )
     }
 
-    return(
-        <>
-        {
-            Allbid.map((bid)=>{
-                return(
-                    <BidComponent key={bid._id}
-        
-        title={bid.title} duration={bid.Duration} />
-                )
-            })
-        }
-        <BidComponent
-        
-        title={obj.title} duration={obj.duration} />
-        
-        </>
-    )
+   
 }
 export {SpecificBid}
